@@ -1,0 +1,87 @@
+@reference "../../../styles.css";
+
+:host {
+  display: block;
+  width: var(--card-width, 110px);
+  height: calc(var(--card-width, 110px) * 1.4545);
+}
+
+.carta-contenedor {
+  @apply h-full w-full cursor-pointer select-none rounded-xl;
+  perspective: 900px;
+}
+
+.carta-contenedor:focus-visible {
+  @apply rounded-xl outline-3 outline-offset-3 outline-yellow-400;
+}
+
+.carta-interior {
+  @apply relative h-full w-full rounded-xl transition-transform;
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition-duration: 450ms;
+  transition-timing-function: cubic-bezier(0.4, 0.2, 0.2, 1);
+}
+
+.carta-volteada,
+.carta-encontrada .carta-interior {
+  transform: rotateY(180deg);
+}
+
+.carta-trasera,
+.carta-frontal {
+  @apply absolute inset-0 overflow-hidden rounded-xl;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.carta-trasera {
+  @apply shadow-lg;
+  background: linear-gradient(145deg, #cc0000, #8b0000);
+}
+
+.pokeball-overlay {
+  @apply pointer-events-none absolute inset-0 flex items-center justify-center;
+}
+
+.carta-frontal {
+  @apply shadow-lg;
+  transform: rotateY(180deg);
+}
+
+.carta-fondo-tipo {
+  @apply flex h-full w-full flex-col items-center justify-center gap-1 rounded-xl border-2 border-violet-400 px-1 pb-1 pt-1.5;
+  background: linear-gradient(160deg, #f5f3ff, #ffffff 60%, #ede9fe);
+  box-sizing: border-box;
+}
+
+.pokemon-imagen {
+  @apply w-full h-full object-contain;
+  transform: scale(1.15);
+}
+
+.pokemon-nombre {
+  @apply w-full overflow-hidden text-ellipsis whitespace-nowrap px-0.5 text-center text-xs font-bold capitalize leading-none text-gray-700;
+  font-size: clamp(0.5rem, calc(var(--card-width, 110px) / 160), 0.75rem);
+}
+
+.carta-contenedor:not(.carta-encontrada):hover .carta-interior:not(.carta-volteada) {
+  transform: scale(1.07);
+  filter: brightness(1.12);
+}
+
+.carta-encontrada .carta-fondo-tipo {
+  @apply border-green-400;
+  background: linear-gradient(160deg, #f0fdf4, #ffffff 60%, #dcfce7);
+}
+
+.carta-encontrada {
+  animation: glow-verde 0.6s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes glow-verde {
+  0% { filter: drop-shadow(0 0 0 rgba(74, 222, 128, 0)); }
+  40% { filter: drop-shadow(0 0 14px rgba(74, 222, 128, 0.9)); }
+  100% { filter: drop-shadow(0 0 6px rgba(74, 222, 128, 0.5)); }
+}

@@ -1,0 +1,53 @@
+@reference "../../../styles.css";
+
+.header-juego {
+  @apply w-full bg-gradient-to-r from-red-700 via-red-600 to-red-700
+         shadow-lg border-b-4 border-yellow-400 sticky top-0 z-30 shrink-0;
+}
+
+.header-contenido {
+  @apply max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2;
+}
+
+.stat-item {
+  @apply flex flex-col items-center min-w-16;
+}
+
+.stat-label {
+  @apply text-xs text-red-200 uppercase tracking-wide font-semibold;
+}
+
+.stat-valor {
+  @apply text-white font-bold text-lg leading-tight;
+}
+
+/* Nivel badge */
+.nivel-badge {
+  @apply bg-yellow-400 text-gray-900 text-sm px-2 py-0.5 rounded-full;
+}
+
+/* Tiempo */
+.tiempo-display {
+  @apply font-mono text-xl;
+}
+
+.stat-tiempo.tiempo-critico .stat-label {
+  @apply text-red-200;
+}
+
+.stat-tiempo.tiempo-critico .tiempo-display {
+  @apply text-red-200;
+}
+
+@keyframes parpadeo-anim {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.parpadeo {
+  animation: parpadeo-anim 0.6s ease-in-out infinite;
+}
+
+.puntos-valor {
+  @apply text-yellow-300;
+}

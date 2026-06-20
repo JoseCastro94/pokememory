@@ -1,0 +1,35 @@
+<header class="header-juego">
+  <div class="header-contenido">
+
+    <div class="stat-item">
+      <span class="stat-label">Nivel</span>
+      <span class="stat-valor nivel-badge">
+        {{ numeroNivel() }} · {{ nombreNivel() }}
+      </span>
+    </div>
+
+    <div class="stat-item stat-tiempo" [class.tiempo-critico]="tiempoCritico()">
+      <span class="stat-label">⏱ Tiempo</span>
+      <span class="stat-valor tiempo-display" [class.parpadeo]="tiempoCritico()">
+        {{ tiempoFormateado() }}
+      </span>
+    </div>
+
+    <div class="stat-item">
+      <span class="stat-label">🃏 Movimientos</span>
+      <span class="stat-valor">{{ movimientos() }}</span>
+    </div>
+
+    <div class="stat-item">
+      <span class="stat-label">⭐ Puntos</span>
+      <span class="stat-valor puntos-valor">{{ puntos() }}</span>
+    </div>
+
+    <div class="stat-item">
+      <button (click)="reiniciarJuego()"
+        class="cursor-pointer rounded-full border border-white/30 bg-white/10 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white/20 hover:scale-105">
+        🎮 Cambiar nivel
+      </button>
+    </div>
+  </div>
+</header>

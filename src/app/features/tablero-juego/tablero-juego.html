@@ -1,0 +1,88 @@
+<div class="relative isolate flex min-h-dvh flex-col overflow-hidden bg-[linear-gradient(160deg,#cc0000_0%,#ff6600_30%,#ffcc00_60%,#fff8dc_100%)]">
+  <img
+    src="img/pikachu2.png"
+    alt=""
+    class="pointer-events-none absolute bottom-2 right-2 z-0 w-28 select-none opacity-80 drop-shadow-2xl sm:bottom-4 sm:right-6 sm:w-36 lg:w-44"
+    draggable="false"
+  />
+
+  <app-header-juego />
+
+  @if (cargando()) {
+    <div class="relative z-10 flex flex-1 flex-col items-center justify-center gap-4">
+      <svg viewBox="0 0 100 100" class="h-20 w-20 animate-spin">
+        <circle cx="50" cy="50" r="48" fill="white" stroke="#CC0000" stroke-width="6"/>
+        <path d="M2 50 A48 48 0 0 1 98 50" fill="#CC0000"/>
+        <circle cx="50" cy="50" r="14" fill="white" stroke="#CC0000" stroke-width="5"/>
+        <circle cx="50" cy="50" r="7" fill="#CC0000"/>
+      </svg>
+      <p class="text-xl font-bold text-white drop-shadow">Cargando Pokemon...</p>
+    </div>
+  }
+
+  @if (!cargando() && !juegoTerminado()) {
+    <div class="relative z-10 flex flex-1 items-center justify-center overflow-hidden px-3 py-2 sm:px-4">
+      <div class="tablero-grid" [style]="gridStyle()">
+        @for (carta of cartas(); track carta.instanceId) {
+          <app-carta-memory
+            [carta]="carta"
+            (cartaSeleccionada)="seleccionarCarta($event)"
+          />
+        }
+      </div>
+    </div>
+  }
+
+  @if (juegoTerminado() && juegoGanado()) {
+    <div class="pantalla-overlay bg-[rgba(0,130,40,0.55)]">
+      <div class="resultado-card border-green-400">
+        <div class="text-6xl leading-none">OK</div>
+        <h2 class="text-4xl font-black leading-none text-green-600">GANASTE</h2>
+        <p class="text-center text-sm text-gray-500">Atrapaste todas las parejas.</p>
+        <div class="flex w-full flex-wrap justify-center gap-4">
+          <div class="result-stat">
+            <span class="result-stat-label">Movimientos</span>
+            <span class="result-stat-valor">{{ movimientos() }}</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">Puntos</span>
+            <span class="result-stat-valor text-yellow-500">{{ puntos() }}</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">Tiempo</span>
+            <span class="result-stat-valor">{{ tiempoRestante() }}s</span>
+          </div>
+        </div>
+        <div class="flex w-full gap-3">
+          <button class="btn-reiniciar" (click)="reiniciarNivel()">Reintentar</button>
+          <button class="btn-inicio" (click)="volverAlInicio()">Inicio</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (juegoTerminado() && !juegoGanado()) {
+    <div class="pantalla-overlay bg-[rgba(150,0,0,0.6)]">
+      <div class="resultado-card border-red-400">
+        <div class="text-6xl leading-none">KO</div>
+        <h2 class="text-4xl font-black leading-none text-red-600">GAME OVER</h2>
+        <p class="text-center text-sm text-gray-500">Se acabo el tiempo. Intentalo de nuevo.</p>
+        <div class="flex w-full flex-wrap justify-center gap-4">
+          <div class="result-stat">
+            <span class="result-stat-label">Movimientos</span>
+            <span class="result-stat-valor">{{ movimientos() }}</span>
+          </div>
+          <div class="result-stat">
+            <span class="result-stat-label">Puntos</span>
+            <span class="result-stat-valor">{{ puntos() }}</span>
+          </div>
+        </div>
+        <div class="flex w-full gap-3">
+          <button class="btn-reiniciar" (click)="reiniciarNivel()">Reintentar</button>
+          <button class="btn-inicio" (click)="volverAlInicio()">Inicio</button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>
